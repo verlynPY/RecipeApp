@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">testintretrofit</string>
+    <string name="title_activity_main_view_recipe">My Compose App</string>
+    <string name="title_activity_details_view_recipe">Details</string>
+    <string name="title_activity_search_view_recipe">My Compose App</string>
+    <string name="title_activity_navigation_view_recipe">My Compose App</string>
+</resources>
