@@ -106,7 +106,7 @@ class SearchViewRecipe : AppCompatActivity() {
                             itemsIndexed(items = result) { index, result ->
                                 result.recipe.label?.let { it1 ->
                                     result.recipe.image?.let { it2 ->
-                                        CardRecipee(
+                                        CardRecipee(applicationContext,
                                             it1,
                                             it2,
                                             onClick = { OpenDetailsRecipe(result.recipe) })

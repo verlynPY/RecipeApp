@@ -83,25 +83,11 @@ class DetailsViewRecipe : AppCompatActivity() {
                             Icon(Icons.Filled.Search,tint = Color(239, 200, 8))
 
                         }
-
-
-                        /*  FilledTextField(
-                                  modifier = Modifier.fillMaxWidth(),
-                                  backgroundColor = Color(0xffb9b9b9),
-                                  value = text,
-                                  onValueChange = { text = it },
-                                  label = { Text("Email") },
-                                  leadingIcon = { Icon(Icons.Filled.Favorite) },
-                                  trailingIcon = { Icon(Icons.Filled.Info) }
-                          )
-*/
-                    }
+                  }
                 }, bodyContent = {
                 ScrollableColumn(Modifier.fillMaxSize()) {
                     ShowRecipeDetails(Ingredientes,label.toString(),Image.toString())}
             })
-
-
 
         }
     }

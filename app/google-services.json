@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "32105378550",
+    "firebase_url": "https://recipe-f0a6d-default-rtdb.firebaseio.com",
+    "project_id": "recipe-f0a6d",
+    "storage_bucket": "recipe-f0a6d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32105378550:android:6880f41267bad9c1ca32d7",
+        "android_client_info": {
+          "package_name": "com.example.testintretrofit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32105378550-ie4kqjqdbabcdu6ejug27b4ka6rqt4rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4CSDbZbMfp-3r2bLgogsM7uK3skmO5hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32105378550-ie4kqjqdbabcdu6ejug27b4ka6rqt4rf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

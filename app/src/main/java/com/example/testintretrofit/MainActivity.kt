@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFirstTodo() {
-        viewModel.getFirstTodo().observe(this, Observer {
+        viewModel.getFirstTodo()!!.observe(this, Observer {
    //         it.hit
             var obj: MutableList<hitsobj?> = it.hit!!
              for(receta in obj!!){

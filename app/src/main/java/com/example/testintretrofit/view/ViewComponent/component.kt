@@ -1,3 +1,4 @@
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
@@ -26,6 +27,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.testintretrofit.R
+import com.example.testintretrofit.model.Favorite.FavoriteHelper
+import com.google.firebase.FirebaseApp
 import retrofit2.http.Url
 
 
@@ -36,7 +39,7 @@ val imagemodifier = Modifier
 
 
 @Composable
-    fun CardRecipee(label:String,UrlImage: String, onClick: () -> Unit) {
+    fun CardRecipee(context: Context,label:String,UrlImage: String, onClick: () -> Unit) {
 
         Card(
             shape = RoundedCornerShape(size = 10.dp),
@@ -71,14 +74,22 @@ val imagemodifier = Modifier
                             }
                 Spacer(Modifier.preferredHeight(5.dp))
                 Text(label, style = MaterialTheme.typography.h6)
-                IconButton(onClick = {}) {
-                    Icon(
-                        asset = vectorResource(id = R.drawable.favorite_empty),
-                        tint = Color(239, 200, 8)
-                    )
-                }
+                SettingButton(context = context,Uri = UrlImage)
             }
 
+        }
+    }
+    @Composable
+    fun SettingButton(context: Context, Uri:String){
+        //var icon_favorite = R.drawable.favorite_empty
+        IconButton(onClick = {
+            val favoriteHelper: FavoriteHelper = FavoriteHelper()
+            favoriteHelper.SaveFavorite(context = context, Uri = Uri)
+        }) {
+            Icon(
+                    asset = vectorResource(id = R.drawable.favorite_empty),
+                    tint = Color(239, 200, 8)
+            )
         }
     }
 

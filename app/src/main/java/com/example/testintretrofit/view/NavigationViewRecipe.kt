@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.foundation.lazy.LazyColumn
@@ -73,8 +70,10 @@ class NavigationViewRecipe : AppCompatActivity() {
                 },
                 bodyContent = {
 
-                    Spacer(Modifier.preferredHeight(5.dp))
-                    NavigationRecipe()
+                    ScrollableColumn(Modifier.fillMaxSize()) {
+                        NavigationRecipe()
+                    }
+
 
                 })
         }
@@ -92,14 +91,15 @@ class NavigationViewRecipe : AppCompatActivity() {
 
     @Composable
     fun NavigationRecipe(){
+
         val imagemodifier = Modifier
-                .preferredHeight(140.dp)
-                .preferredWidth(170.dp)
+                .preferredHeight(150.dp)
+                .preferredWidth(180.dp)
                 .clip(shape = RoundedCornerShape(10.dp))
+                .padding(6.dp)
 
-
-
-        Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
             Row{
 
                 Image(imageResource(id = R.drawable.meatedt), modifier = imagemodifier.clickable(onClick = {

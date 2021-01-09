@@ -17,9 +17,17 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat.startActivity
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class Utils {
+
+
+
+
+
+
     @ExperimentalLazyDsl
     @Composable
     fun layout(result:ArrayList<hitsobj>){
@@ -62,7 +70,7 @@ class Utils {
             bodyContent = {
                 LazyColumn {
                     itemsIndexed(items = result) { index, result ->
-                        result.recipe.label?.let { it1 -> result.recipe.image?.let { it2 -> CardRecipee(it1, it2, onClick = {}) } }
+                       // result.recipe.label?.let { it1 -> result.recipe.image?.let { it2 -> CardRecipee(it1, it2, onClick = {}) } }
 
                     }
                 }

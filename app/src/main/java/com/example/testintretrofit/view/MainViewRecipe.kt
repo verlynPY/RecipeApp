@@ -25,6 +25,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.testintretrofit.model.Recipe
 import com.example.testintretrofit.model.hitsobj
 import com.example.testintretrofit.viewmodel.MainViewModel
+import com.google.firebase.FirebaseApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 @ExperimentalLazyDsl
@@ -36,56 +40,61 @@ class MainViewRecipe : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+      viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         var obj: MutableList<hitsobj?>? = null
-        viewModel.getFirstTodo().observe(this, Observer {
-            obj = it.hit
-            for (receta in obj!!) {
-                listRecipe.add(receta!!)
-            }
-            val result = listRecipe
-            val fabShape = CircleShape
-            setContent {
-                val state = state { "" }
 
-                Scaffold(
 
-                       bottomBar = {
-                            BottomAppBar(backgroundColor = Color(0,0,0)) {
-                                IconButton(onClick = {
-                                    // scaffoldState.drawerState.open()
-                                }) {
-                                    Icon(Icons.Filled.Favorite,tint = Color(239, 200, 8), modifier = Modifier.preferredHeight(80.dp))
+
+            viewModel.getFirstTodo().observe(this@MainViewRecipe, Observer {
+                obj = it.hit
+                for (receta in obj!!) {
+                    listRecipe.add(receta!!)
+                }
+                val result = listRecipe
+                val fabShape = CircleShape
+                setContent {
+                    val state = state { "" }
+
+                    Scaffold(
+
+                            bottomBar = {
+                                BottomAppBar(backgroundColor = Color(0, 0, 0)) {
+
+                                    IconButton(onClick = {
+                                        // scaffoldState.drawerState.open()
+                                    }) {
+                                        Icon(Icons.Filled.Favorite, tint = Color(239, 200, 8), modifier = Modifier.preferredHeight(80.dp))
+
+                                    }
+                                    IconButton(onClick = {
+                                        // scaffoldState.drawerState.open()
+                                    }) {
+                                        Icon(Icons.Filled.Home, tint = Color(239, 200, 8))
+
+                                    }
+                                    IconButton(onClick = {
+                                        OpenNavigation()
+                                    }) {
+                                        Icon(Icons.Filled.Search, tint = Color(239, 200, 8))
+
+                                    }
 
                                 }
-                                IconButton(onClick = {
-                                    // scaffoldState.drawerState.open()
-                                }) {
-                                    Icon(Icons.Filled.Home,tint = Color(239, 200, 8))
+                            },
+                            bodyContent = {
 
-                                }
-                                IconButton(onClick = {
-                                    OpenNavigation()
-                                }) {
-                                    Icon(Icons.Filled.Search,tint = Color(239, 200, 8))
+                                LazyColumn {
+                                    itemsIndexed(items = result) { index, result ->
+                                        result.recipe.label?.let { it1 -> result.recipe.image?.let { it2 -> CardRecipee(applicationContext,it1, it2, onClick = { OpenDetailsRecipe(result.recipe) }) } }
 
+                                    }
                                 }
 
-                            }
-                        },
-                        bodyContent = {
-                            LazyColumn {
-                                itemsIndexed(items = result) { index, result ->
-                                    result.recipe.label?.let { it1 -> result.recipe.image?.let { it2 -> CardRecipee(it1, it2, onClick = {OpenDetailsRecipe(result.recipe)}) } }
-                                    Spacer(Modifier.preferredHeight(50.dp))
-                                }
-                            }
-                        })
+                            })
 
 
-            }
-        })
+                }
+            })
 
 
 
