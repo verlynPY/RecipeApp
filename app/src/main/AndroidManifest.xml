@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Testintretrofit">
-        <activity android:name=".view.ViewComponent.MainActivity"></activity>
+        <activity
+            android:name=".view.FavoriteViewRecipe"
+            android:label="@string/title_activity_favorite_view_recipe"
+            android:theme="@style/Theme.Testintretrofit.NoActionBar"></activity>
+        <activity android:name=".view.ViewComponent.MainActivity" />
         <activity
             android:name=".view.NavigationViewRecipe"
             android:label="@string/title_activity_navigation_view_recipe"

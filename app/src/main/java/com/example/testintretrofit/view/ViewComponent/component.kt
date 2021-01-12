@@ -8,6 +8,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -28,6 +29,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.testintretrofit.R
 import com.example.testintretrofit.model.Favorite.FavoriteHelper
+import com.example.testintretrofit.model.Recipe
 import com.google.firebase.FirebaseApp
 import retrofit2.http.Url
 
@@ -35,56 +37,49 @@ import retrofit2.http.Url
 val imagemodifier = Modifier
         .preferredHeight(200.dp)
         .fillMaxWidth()
-        .clip(shape = RoundedCornerShape(10.dp))
+        .clip(shape = RoundedCornerShape(15.dp))
 
 
 @Composable
-    fun CardRecipee(context: Context,label:String,UrlImage: String, onClick: () -> Unit) {
+    fun CardRecipee(context: Context,recipe: Recipe, onClick: () -> Unit) {
 
         Card(
             shape = RoundedCornerShape(size = 10.dp),
             backgroundColor = Color.Black,
             modifier = Modifier.padding(5.dp)
                 .clickable(onClick = onClick)
-
         )
-
         {
-
             var imagedefault = R.drawable.carbs
             var bitmap by remember { mutableStateOf<Bitmap?>(null)}
-
             Glide.with(ContextAmbient.current).asBitmap()
-                .load(UrlImage)
+                .load(recipe.image)
+                    .placeholder(R.drawable.img_error)
+                    .error(R.drawable.img_error)
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         bitmap = resource
                     }
-
                     override fun onLoadCleared(placeholder: Drawable?) {}
                 })
-
-
                         Column(modifier = Modifier.padding(5.dp)) {
                             if (bitmap != null ){
-                Image(bitmap!!.asImageAsset(),
+                        Image(bitmap!!.asImageAsset(),
                         modifier = imagemodifier,
-                        contentScale = ContentScale.Crop
-                )
+                        contentScale = ContentScale.Crop)
                             }
                 Spacer(Modifier.preferredHeight(5.dp))
-                Text(label, style = MaterialTheme.typography.h6)
-                SettingButton(context = context,Uri = UrlImage)
+                Text(recipe.label.toString(), style = MaterialTheme.typography.h6, color = Color(174,174,174))
+               SettingButton(context = context,recipe = recipe)
             }
-
         }
     }
     @Composable
-    fun SettingButton(context: Context, Uri:String){
+    fun SettingButton(context: Context, recipe: Recipe){
         //var icon_favorite = R.drawable.favorite_empty
         IconButton(onClick = {
             val favoriteHelper: FavoriteHelper = FavoriteHelper()
-            favoriteHelper.SaveFavorite(context = context, Uri = Uri)
+            favoriteHelper.SaveFavorite(context = context, recipe = recipe)
         }) {
             Icon(
                     asset = vectorResource(id = R.drawable.favorite_empty),
@@ -113,3 +108,12 @@ val imagemodifier = Modifier
             Image(bitmap!!.asImageAsset(), Modifier.fillMaxWidth())
       //  return bitmapState
     }
+
+    val buttonmodifier = Modifier.clip(shape = RoundedCornerShape(15.dp))
+    @Composable
+    fun SeeMore(search:String){
+        Button(onClick = {}, backgroundColor = Color(0,0,0), modifier = buttonmodifier) {
+            Text("Mas Detalles", color = Color(239, 200, 8))
+        }
+    }
+

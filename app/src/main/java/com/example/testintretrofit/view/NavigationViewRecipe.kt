@@ -2,6 +2,7 @@ package com.example.testintretrofit.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
@@ -22,8 +23,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
 import com.example.testintretrofit.R
 import com.example.testintretrofit.view.ui.TestintretrofitTheme
@@ -35,20 +39,9 @@ class NavigationViewRecipe : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
-
-
             Scaffold(
-
-
                 topBar = {
                     TopAppBar(backgroundColor = Color(0, 0, 0)) {
-                        /*IconButton(onClick = {
-                            // scaffoldState.drawerState.open()
-                        }) {
-                            Icon(Icons.Filled.Search,tint = Color(239, 200, 8))
-
-                        }*/
                         val password = remember { mutableStateOf("") }
                         TextField(modifier = Modifier.fillMaxWidth(),
                             backgroundColor = Color(82, 82, 82),
@@ -63,22 +56,16 @@ class NavigationViewRecipe : AppCompatActivity() {
                                     softKeyboardController?.hideSoftwareKeyboard()
                                 }
                             }
-
-
                         )
                     }
                 },
                 bodyContent = {
-
                     ScrollableColumn(Modifier.fillMaxSize()) {
                         NavigationRecipe()
                     }
-
-
                 })
         }
     }
-
     fun SendQuery(query: String){
         val intent = Intent(applicationContext, SearchViewRecipe::class.java)
         val bundle = Bundle()
@@ -96,12 +83,14 @@ class NavigationViewRecipe : AppCompatActivity() {
                 .preferredHeight(150.dp)
                 .preferredWidth(180.dp)
                 .clip(shape = RoundedCornerShape(10.dp))
-                .padding(6.dp)
+                .absolutePadding(0.dp,0.dp,8.dp,0.dp)
+
 
         Column(modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Categorias", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 30.sp),
+                    modifier = Modifier.align(alignment = Alignment.Start).absolutePadding(15.dp,5.dp,0.dp,0.dp))
             Row{
-
                 Image(imageResource(id = R.drawable.meatedt), modifier = imagemodifier.clickable(onClick = {
                     SendQuery("meat")
                 }))

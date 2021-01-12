@@ -82,42 +82,19 @@ class SearchViewRecipe : AppCompatActivity() {
 
                             }
                             Text(query.toString(),style = MaterialTheme.typography.h5, modifier = Modifier.padding(10.dp),textAlign = TextAlign.Center)
-                            /*   val password = remember { mutableStateOf("") }
-                            TextField(modifier = Modifier.fillMaxWidth(),backgroundColor = Color(82,82,82),
-                                value = password.value,
-                                onValueChange = { password.value = it },
-                                imeAction = androidx.compose.ui.text.input.ImeAction.Done,
-                                label = { Text("Search") },
-                                leadingIcon = { Icon(Icons.Filled.Preview,tint = Color(239, 200, 8)) },
-                                onImeActionPerformed = { action, softKeyboardController ->
-                                    if (action == androidx.compose.ui.text.input.ImeAction.Done) {
-                                        Toast.makeText(applicationContext,"${password.value}",Toast.LENGTH_SHORT).show()
-                                        softKeyboardController?.hideSoftwareKeyboard()
-                                    }
-                                }
-
-
-                            )*/
-
                         }
                     },
                     bodyContent = {
                         LazyColumn {
                             itemsIndexed(items = result) { index, result ->
-                                result.recipe.label?.let { it1 ->
-                                    result.recipe.image?.let { it2 ->
-                                        CardRecipee(applicationContext,
-                                            it1,
-                                            it2,
-                                            onClick = { OpenDetailsRecipe(result.recipe) })
-                                    }
-                                }
-
+                                CardRecipee(applicationContext,
+                                    recipe = result.recipe,
+                                    onClick = {
+                                        OpenDetailsRecipe(result.recipe)
+                                    })
                             }
                         }
                     })
-
-
                 /*  Column{
                       TextField(
                               value = state.value,
