@@ -1,7 +1,7 @@
 package com.example.testintretrofit.view
 
-import SeeMore
-import android.content.Intent
+
+import ShowRecipeDetails
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -44,9 +44,7 @@ class DetailsViewRecipe : AppCompatActivity() {
         val Image = bundle!!.getCharSequence("Image")
         val Ingredientes:ArrayList<String> = bundle!!.getStringArrayList("Ingredientes") as ArrayList<String>
         setContent {
-            val fabShape = CircleShape
-            val scaffoldState = rememberScaffoldState()
-            Scaffold(   topBar = {
+            Scaffold(topBar = {
                 TopAppBar(backgroundColor = Color(0, 0, 0)) {
                     IconButton(onClick = {
                         finish()
@@ -61,84 +59,6 @@ class DetailsViewRecipe : AppCompatActivity() {
                 }
             })
             }
-
-              /*  bottomBar = {
-                    BottomAppBar(backgroundColor = Color(0,0,0)) {
-                        IconButton(onClick = {
-                            // scaffoldState.drawerState.open()
-                        }) {
-                            Icon(Icons.Filled.Favorite,tint = Color(239, 200, 8))
-
-                        }
-                        IconButton(onClick = {
-                            // scaffoldState.drawerState.open()
-                        }) {
-                            Icon(Icons.Filled.Home,tint = Color(239, 200, 8))
-
-                        }
-                        IconButton(onClick = {
-
-                        }) {
-                            Icon(Icons.Filled.Search,tint = Color(239, 200, 8))
-
-                        }
-                  }
-                }, bodyContent = {
-                ScrollableColumn(Modifier.fillMaxSize()) {
-                    ShowRecipeDetails(Ingredientes,label.toString(),Image.toString())}
-            })
-            */
         }
     }
-
-var imagemodifier = Modifier
-    .preferredHeight(260.dp)
-    .fillMaxWidth()
-    .clip(shape = RoundedCornerShape(15.dp))
-var imagedefault = R.drawable.carbs
-
-
-@Composable
-fun ShowRecipeDetails(Ingredientes:ArrayList<String>,Label:String,UrlImage:String){
-    var bitmap by remember { mutableStateOf<Bitmap?>(null)}
-
-    Glide.with(ContextAmbient.current).asBitmap()
-            .load(UrlImage)
-            .error(R.drawable.img_error)
-            .placeholder(R.drawable.img_error)
-            .into(object : CustomTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                bitmap = resource
-            }
-            override fun onLoadCleared(placeholder: Drawable?) {}
-        })
-    Column(modifier = Modifier.padding(5.dp)) {
-        if (bitmap != null ) {
-            Image(
-                bitmap!!.asImageAsset(),
-                modifier = imagemodifier,
-                contentScale = ContentScale.Crop
-            )
-        }
-        Spacer(Modifier.preferredHeight(12.dp))
-        Text(Label, style = MaterialTheme.typography.h4,color = Color(239, 200, 8) ,textAlign = TextAlign.Center, modifier = Modifier.padding(5.dp))
-        Spacer(Modifier.preferredHeight(8.dp))
-      /*  Surface(
-            elevation = 2.dp,
-            color = MaterialTheme.colors.surface) {*/
-            for (item in Ingredientes) {
-                Text(
-                    item,
-                    style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(10.dp),
-                    color = Color(159,128,0)
-                )
-            }
-       // SeeMore()
-     //   }
-        Spacer(Modifier.preferredHeight(45.dp))
-
-    }
-
-}
 

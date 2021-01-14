@@ -17,8 +17,8 @@ class MainViewModel : ViewModel() {
     val repository: Dat = Dat()
     val repositorio_favorite: FavoriteHelper = FavoriteHelper()
 
-    fun getFirstTodo(): MutableLiveData<RecipeObj> {
-        return repository.getTodo()
+    fun getFirstTodo(Lyrics_Random:String): MutableLiveData<RecipeObj> {
+        return repository.getTodo(Lyrics_Random)
     }
 
     fun GetSearchRecipe(query:String): MutableLiveData<RecipeObj> {

@@ -5,4 +5,7 @@
     <string name="title_activity_search_view_recipe">My Compose App</string>
     <string name="title_activity_navigation_view_recipe">My Compose App</string>
     <string name="title_activity_favorite_view_recipe">My Compose App</string>
+    <string name="title_activity_testing">My Compose App</string>
+    <string name="title_activity_splash_screen">My Compose App</string>
+    <string name="title_activity_error_network_view">My Compose App</string>
 </resources>

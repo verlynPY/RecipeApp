@@ -12,9 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Testintretrofit">
         <activity
-            android:name=".view.FavoriteViewRecipe"
-            android:label="@string/title_activity_favorite_view_recipe"
+            android:name=".view.ErrorNetworkView"
+            android:label="@string/title_activity_error_network_view"
             android:theme="@style/Theme.Testintretrofit.NoActionBar"></activity>
+        <activity
+            android:name=".view.SplashScreen"
+            android:label="@string/title_activity_splash_screen"
+            android:theme="@style/Theme.Testintretrofit.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.testing"
+            android:label="@string/title_activity_testing"
+            android:theme="@style/Theme.Testintretrofit.NoActionBar"></activity>
+        <activity
+            android:name=".view.FavoriteViewRecipe"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_favorite_view_recipe"
+            android:theme="@style/Theme.Testintretrofit.NoActionBar" />
         <activity android:name=".view.ViewComponent.MainActivity" />
         <activity
             android:name=".view.NavigationViewRecipe"
@@ -22,6 +41,7 @@
             android:theme="@style/Theme.Testintretrofit.NoActionBar" />
         <activity
             android:name=".view.SearchViewRecipe"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_search_view_recipe"
             android:theme="@style/Theme.Testintretrofit.NoActionBar" />
         <activity
@@ -30,14 +50,9 @@
             android:theme="@style/Theme.Testintretrofit.NoActionBar" />
         <activity
             android:name=".view.MainViewRecipe"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main_view_recipe"
-            android:theme="@style/Theme.Testintretrofit.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.Testintretrofit.NoActionBar"></activity>
         <activity android:name=".MainActivity" />
     </application>
 

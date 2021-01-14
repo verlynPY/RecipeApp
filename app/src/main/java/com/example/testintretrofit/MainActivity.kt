@@ -18,19 +18,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        showFirstTodo()
-    }
 
-    private fun showFirstTodo() {
-        viewModel.getFirstTodo()!!.observe(this, Observer {
-   //         it.hit
-            var obj: MutableList<hitsobj?> = it.hit!!
-             for(receta in obj!!){
-                 Log.i(TAG, receta!!.recipe.label.toString())
-             }
-          //  Log.e(TAG,"Heyyy ${obj}")
-
-
-        })
     }
 }

@@ -1,6 +1,7 @@
 package com.example.testintretrofit.model
 
 import androidx.lifecycle.MutableLiveData
+import com.example.testintretrofit.model.Utils.DataLoaded
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Dat {
 
 
-    fun getTodo(): MutableLiveData<RecipeObj> {
+    fun getTodo(Lyrics_Random:String): MutableLiveData<RecipeObj> {
         val liveData = MutableLiveData<RecipeObj>()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Credentials.Url)
@@ -22,10 +23,11 @@ class Dat {
             .build()
         val client: Webservice = retrofit.create<Webservice>(Webservice::class.java)
         GlobalScope.launch(Dispatchers.IO) {
-            client.getTodo("n", Credentials.App_Id, Credentials.App_Key).enqueue(object : Callback<RecipeObj> {
+            client.getTodo(Lyrics_Random, Credentials.App_Id, Credentials.App_Key).enqueue(object : Callback<RecipeObj> {
                 override fun onResponse(call: Call<RecipeObj>, response: Response<RecipeObj>) {
                     if (response.isSuccessful) {
                         liveData.value = response.body()
+                        DataLoaded = true
                     }
                 }
                 override fun onFailure(call: Call<RecipeObj>, t: Throwable) {

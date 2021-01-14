@@ -5,42 +5,45 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.testintretrofit.model.Recipe
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class FavoriteHelper {
 
     val db = FirebaseFirestore.getInstance()
-
     fun SaveFavorite(context: Context, recipe: Recipe){
-      val Id_User:String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         val favorito = recipe
-        db.collection("favoritos").document().set(favorito)
+        db.collection("favoritos").document(recipe.label.toString()).set(favorito)
                 .addOnSuccessListener { documentReference ->
-                    Toast.makeText(context, "Receta guardada con exito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Recipe successfully saved", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e->
-                    Toast.makeText(context, "Fallo al guardar la receta $e", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Failed to saved the recipe $e", Toast.LENGTH_SHORT).show()
                 }
     }
-
     fun ReadFavorite(): MutableLiveData<Recipe> {
         val liveData = MutableLiveData<Recipe>()
         val documentreference = db.collection("favoritos")
-        documentreference.get().addOnSuccessListener() {result ->
+        documentreference.get().addOnSuccessListener() { result ->
             for (document in result) {
-                var ingredientlist:ArrayList<String> = ArrayList()
-              ingredientlist.add("sugar")
-                var yield:Int = document.getLong("yield")!!.toInt()
                 var recipe = Recipe(document.getString("uri"), document.getString("label"),
-                document.getString("image"), document.getString("source"), document.getString("url"),
-                document.getLong("yield")!!.toInt(), 5f,
-                ingredientlist)
+                        document.getString("image"), document.getString("source"), document.getString("url"),
+                        document.getLong("yield")!!.toInt(), 5f,
+                        document.get("ingredientLines") as ArrayList<String>)
                liveData.value = recipe
             }
-
         }
         return liveData
     }
-
+    fun Delete(context: Context,Label:String) {
+        db.collection("favoritos").document(Label)
+                .delete()
+                .addOnSuccessListener{
+                    Toast.makeText(context, "Recipe eliminated from favorites", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Failed delete the recipe", Toast.LENGTH_SHORT).show()
+                }
+    }
 }

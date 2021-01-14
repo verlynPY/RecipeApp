@@ -8,6 +8,7 @@ import android.net.Network
 import android.net.NetworkInfo
 import android.net.NetworkRequest
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.lazy.ExperimentalLazyDsl
@@ -23,6 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat.startActivity
 import com.example.testintretrofit.view.DetailsViewRecipe
+import com.example.testintretrofit.view.FavoriteViewRecipe
+import com.example.testintretrofit.view.NavigationViewRecipe
+import com.example.testintretrofit.view.SearchViewRecipe
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -30,9 +34,21 @@ import com.google.firebase.ktx.Firebase
 object Utils {
 
 
+    var DataLoaded:Boolean = false
+
+    @ExperimentalLazyDsl
+    fun SendQuery(context: Context, query: String){
+        val intent = Intent(context, SearchViewRecipe::class.java)
+        val bundle = Bundle()
+        bundle.putString("Query",query)
+        intent.putExtras(bundle)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+
+    }
 
     fun Connection(context: Context):Boolean{
-         var Connection_On: Boolean = true
+         var Connection_On: Boolean = false
       val cm: ConnectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val builder: NetworkRequest.Builder = NetworkRequest.Builder()
         cm.registerNetworkCallback(
@@ -40,10 +56,12 @@ object Utils {
                 object  : ConnectivityManager.NetworkCallback(){
                     override fun onAvailable(network: Network) {
                         Connection_On = true
+                        Toast.makeText(context, "Enable", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onLost(network: Network) {
                         Connection_On = false
+                        Toast.makeText(context, "Disable", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -80,18 +98,6 @@ object Utils {
                         Icon(Icons.Filled.Search,tint = Color(239, 200, 8))
 
                     }
-
-
-                    /*  FilledTextField(
-                              modifier = Modifier.fillMaxWidth(),
-                              backgroundColor = Color(0xffb9b9b9),
-                              value = text,
-                              onValueChange = { text = it },
-                              label = { Text("Email") },
-                              leadingIcon = { Icon(Icons.Filled.Favorite) },
-                              trailingIcon = { Icon(Icons.Filled.Info) }
-                      )
-*/
                 }
             },
             bodyContent = {
@@ -104,4 +110,34 @@ object Utils {
             })
     }
 
+    fun GoBack(context: Context,activity2:AppCompatActivity) {
+        val intent = Intent(context, activity2::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+    }
+
+    fun OpenDetailsRecipe(context: Context, recipe: Recipe){
+        val intent = Intent(context, DetailsViewRecipe::class.java)
+        val bundle = Bundle()
+        bundle.putString("Label",recipe.label)
+        bundle.putStringArrayList("Ingredientes", recipe.ingredientLines)
+        bundle.putString("Image",recipe.image)
+        bundle.putFloat("Calorias", recipe.calories)
+        intent.putExtras(bundle)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+
+    }
+
+    fun OpenNavigation(context: Context, activity2:AppCompatActivity){
+        val intent = Intent(context, activity2::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+    }
+    fun OpenFavorite(context: Context, activity2:AppCompatActivity){
+        val intent = Intent(context, activity2::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+
+    }
 }
