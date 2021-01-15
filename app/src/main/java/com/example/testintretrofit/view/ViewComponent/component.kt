@@ -77,7 +77,7 @@ import retrofit2.http.Url
                         contentScale = ContentScale.Crop)
                             }
                             else{
-                                Image(imageResource(R.drawable.img_error),
+                                Image(imageResource(R.mipmap.receta),
                                         modifier = imagemodifier,
                                         contentScale = ContentScale.Crop)
                             }
@@ -140,6 +140,7 @@ fun NavigationRecipe(context: Context){
         .preferredWidth(180.dp)
         .clip(shape = RoundedCornerShape(10.dp))
         .absolutePadding(8.dp,0.dp,8.dp,0.dp)
+
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Search", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 42.sp),
@@ -160,7 +161,7 @@ fun NavigationRecipe(context: Context){
                     }
                 }
         )
-        Row(  modifier = Modifier.fillMaxWidth(.9f)){
+        Row(modifier = Modifier.fillMaxWidth(.9f)){
             Text(text = "Categories", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp),
                     modifier = Modifier.absolutePadding(0.dp,20.dp,0.dp,0.dp))
         }

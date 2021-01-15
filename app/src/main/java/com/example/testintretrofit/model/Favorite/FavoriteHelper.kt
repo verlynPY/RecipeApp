@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.testintretrofit.model.Recipe
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class FavoriteHelper {
@@ -14,16 +17,20 @@ class FavoriteHelper {
     val db = FirebaseFirestore.getInstance()
     fun SaveFavorite(context: Context, recipe: Recipe){
         val favorito = recipe
-        db.collection("favoritos").document(recipe.label.toString()).set(favorito)
-                .addOnSuccessListener { documentReference ->
-                    Toast.makeText(context, "Recipe successfully saved", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { e->
-                    Toast.makeText(context, "Failed to saved the recipe $e", Toast.LENGTH_SHORT).show()
-                }
+        GlobalScope.launch(Dispatchers.IO) {
+            db.collection("favoritos").document(recipe.label.toString()).set(favorito)
+                    .addOnSuccessListener { documentReference ->
+                        Toast.makeText(context, "Recipe successfully saved", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Failed to saved the recipe $e", Toast.LENGTH_SHORT).show()
+                    }
+        }
     }
     fun ReadFavorite(): MutableLiveData<Recipe> {
+
         val liveData = MutableLiveData<Recipe>()
+        GlobalScope.launch(Dispatchers.IO) {
         val documentreference = db.collection("favoritos")
         documentreference.get().addOnSuccessListener() { result ->
             for (document in result) {
@@ -33,6 +40,7 @@ class FavoriteHelper {
                         document.get("ingredientLines") as ArrayList<String>)
                liveData.value = recipe
             }
+        }
         }
         return liveData
     }

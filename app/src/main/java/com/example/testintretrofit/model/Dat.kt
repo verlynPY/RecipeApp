@@ -44,17 +44,19 @@ class Dat {
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .build()
         val client: Webservice = retrofit.create<Webservice>(Webservice::class.java)
-
-        client.getTodo(query, Credentials.App_Id, Credentials.App_Key).enqueue(object: Callback<RecipeObj> {
-            override fun onResponse(call: Call<RecipeObj>, response: Response<RecipeObj>) {
-                if (response.isSuccessful) {
-                    liveData.value = response.body()
+        GlobalScope.launch(Dispatchers.IO) {
+            client.getTodo(query, Credentials.App_Id, Credentials.App_Key).enqueue(object : Callback<RecipeObj> {
+                override fun onResponse(call: Call<RecipeObj>, response: Response<RecipeObj>) {
+                    if (response.isSuccessful) {
+                        liveData.value = response.body()
+                    }
                 }
-            }
-            override fun onFailure(call: Call<RecipeObj>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+
+                override fun onFailure(call: Call<RecipeObj>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+        }
         return liveData
     }
 }
